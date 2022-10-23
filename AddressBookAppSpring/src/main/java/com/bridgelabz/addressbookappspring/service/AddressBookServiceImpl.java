@@ -84,4 +84,14 @@ public class AddressBookServiceImpl implements IAddressBookService{
         addressBookRepo.deleteById(personId);
         return new ResponseEntity<>("Deleted address book data for id : "+personId, HttpStatus.OK);
     }
+
+    @Override
+    public List<AddressBookData> sortContactsByCity() {
+        return addressBookRepo.sortByCity();
+    }
+
+    @Override
+    public List<AddressBookData> sortContactsByState() {
+        return addressBookRepo.sortByState();
+    }
 }
