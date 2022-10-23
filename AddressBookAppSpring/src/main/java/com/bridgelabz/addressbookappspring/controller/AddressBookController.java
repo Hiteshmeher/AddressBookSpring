@@ -1,9 +1,11 @@
 package com.bridgelabz.addressbookappspring.controller;
 
 import com.bridgelabz.addressbookappspring.dto.AddressBookDTO;
+import com.bridgelabz.addressbookappspring.dto.ResponseDTO;
 import com.bridgelabz.addressbookappspring.entity.AddressBookData;
 import com.bridgelabz.addressbookappspring.service.IAddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +37,8 @@ public class AddressBookController {
         return addressBookService.getAddressBookDataById(personId);
     }
 
+
+
     /**
      *
      * @param addressBookDTO
@@ -65,5 +69,29 @@ public class AddressBookController {
     @DeleteMapping("/delete/{personId}")
     public ResponseEntity<String> deleteAddressBookData(@PathVariable("personId") int personId) {
         return addressBookService.deleteAddressBookData(personId);
+    }
+
+    /**
+     *
+     * Sorting AddressBook data from Database by City
+     */
+    @GetMapping("/sortByCity")
+    public ResponseEntity<ResponseDTO> sortByCity(){
+        List<AddressBookData>  addressBookData = null;
+        addressBookData = addressBookService.sortContactsByCity();
+        ResponseDTO responseDTO = new ResponseDTO("Sorted Contacts Details",addressBookData);
+        return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * Sorting AddressBook data from Database by State
+     */
+    @GetMapping("/sortByState")
+    public ResponseEntity<ResponseDTO> sortByState(){
+        List<AddressBookData>  addressBookData = null;
+        addressBookData = addressBookService.sortContactsByState();
+        ResponseDTO responseDTO = new ResponseDTO("Sorted Contacts Details",addressBookData);
+        return new ResponseEntity<ResponseDTO>(responseDTO,HttpStatus.OK);
     }
 }
